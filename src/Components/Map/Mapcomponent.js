@@ -20,44 +20,14 @@ export default class Mapcomponent extends Component {
 
   }
 
-/*   componentDidMount=()=>{
-    this.tiempoMunicipio()
-  }
-  tiempoMunicipio = () => {
-
-     
-    axios.get(Global.urlAemet + '/api/prediccion/especifica/municipio/diaria/' + this.props.cp + '?api_key=' + Global.apiKeyAemet).then(res => {
-
-        axios.get(res.data.datos).then(resp => {
-
-            var result = resp.data[0].prediccion.dia[0].temperatura;
-
-            this.setState({
-                status: true,
-                temperatura: { max: result.maxima, min: result.minima }
-            })
-           
-        })
-
-    }).catch(err => {
-
-        this.setState({
-            error: true
-        })
-
-    })
-
-
-
-
-} */
 
 
   render() {
 
     return (
 
-    
+      <React.Fragment>
+    <Aemet cp={this.props.cp} />
         <MapContainer center={this.props.coordenadas} zoom={this.state.zoom} scrollWheelZoom={true}>
         <TileLayer
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
@@ -72,13 +42,13 @@ export default class Mapcomponent extends Component {
               <p className="">Lat: {this.props.coordenadas.lat}</p>
               <p>Long: {this.props.coordenadas.lng}</p>
               <h6>El tiempo</h6>
-             <Aemet cp={this.props.cp} />
+             
             </div>
           </Popup>
 
         </Marker>
       </MapContainer>
-  
+  </React.Fragment>
     
       
 
