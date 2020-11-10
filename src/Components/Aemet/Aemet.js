@@ -11,67 +11,42 @@ export default class Aemet extends Component {
             cp: props.cp,
             status: false,
             recarga: props.recarga,
-
         }
-
     }
-
-
-
-    //establezco el state
     state = {
         status: false,
         temperatura: {}
     }
 
-    // cuando se crea el componente se llama a la funcion
     componentDidMount = () => {
 
         this.tiempoMunicipio();
     }
 
-
-    //EL ERROR CREO QUE ES ESTE, PERO NO SÉ CÓMO HACERLO SI NO...
     componentDidUpdate = () => {
 
         this.tiempoMunicipio();
     }
 
-
     //metodo que realiza una busqeuda en la API AEMET para encontrar, mediante el CP, el tiempo en el municipio
     tiempoMunicipio = () => {
 
-
         axios.get(Global.urlAemet + '/api/prediccion/especifica/municipio/diaria/' + this.props.cp + '?api_key=' + Global.apiKeyAemet)
             .then(res => {
-
                 return res.data.datos;
-
             }).then(res => {
-
                 axios.get(res).then(res => {
-
                     var result = res.data[0].prediccion.dia[0].temperatura;
-
-                   //AQUI :), DISPERSO
-                     this.setState({
+                    console.log(result)
+                    /*  this.setState({
                          status: true,
                          temperatura: { max: result.maxima, min: result.minima }
-                     })
-                     
-                    
+                     }) */
                 })
-
-                
-
             })
-
-
     }
 
-
     render() {
-
 
         if (this.state.status) {
 
@@ -83,17 +58,7 @@ export default class Aemet extends Component {
 
         } else {
 
-            return (
-                <div>
-
-                    cargando temperatura ...
-
-                </div>
-            )
+            return <div> cargando temperatura ...</div>
         }
-
-
-
-
     }
 }
