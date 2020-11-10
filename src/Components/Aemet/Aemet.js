@@ -4,49 +4,68 @@ import Global from './../Global';
 
 export default class Aemet extends Component {
 
+
     constructor(props) {
         super(props);
 
         this.state = {
             cp: props.cp,
-            status: false,
-            recarga: props.recarga,
+            carga: props.carga
         }
     }
+
     state = {
         status: false,
-        temperatura: {}
+        temperatura: { max: 0, min: 0 },
     }
 
     componentDidMount = () => {
 
         this.tiempoMunicipio();
+
     }
 
-    componentDidUpdate = () => {
+    componentDidUpdate = (prevProps) => {
 
-        this.tiempoMunicipio();
+        if (this.props.cp !== prevProps.cp) {
+
+            this.tiempoMunicipio();
+        }
     }
 
     //metodo que realiza una busqeuda en la API AEMET para encontrar, mediante el CP, el tiempo en el municipio
     tiempoMunicipio = () => {
 
+        console.log('tiempomunicipio')
+
         axios.get(Global.urlAemet + '/api/prediccion/especifica/municipio/diaria/' + this.props.cp + '?api_key=' + Global.apiKeyAemet)
             .then(res => {
+
                 return res.data.datos;
+
             }).then(res => {
-                axios.get(res).then(res => {
-                    var result = res.data[0].prediccion.dia[0].temperatura;
-                    console.log(result)
-                    /*  this.setState({
-                         status: true,
-                         temperatura: { max: result.maxima, min: result.minima }
-                     }) */
-                })
+
+                axios.get(res)
+
+                    .then(res => {
+
+                        var result = res.data[0].prediccion.dia[0].temperatura;
+
+                        this.setState({
+                            status: true,
+                            temperatura: { max: result.maxima, min: result.minima }
+                        })
+
+                    })
             })
+
+
     }
 
     render() {
+
+        console.log(this.state.temperatura)
+
 
         if (this.state.status) {
 

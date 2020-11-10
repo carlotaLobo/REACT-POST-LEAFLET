@@ -22,35 +22,33 @@ export default class Mapcomponent extends Component {
 
 
 
+
   render() {
 
     return (
 
       <React.Fragment>
-    <Aemet cp={this.props.cp} />
         <MapContainer center={this.props.coordenadas} zoom={this.state.zoom} scrollWheelZoom={true}>
-        <TileLayer
-          attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
-        <Marker position={this.props.coordenadas} icon={Iconlocation}>
+          <TileLayer
+            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          />
+          <Marker position={this.props.coordenadas} icon={Iconlocation}>
+            <Popup>
+              <div className="card-body">
+                <h5 className="card-title">Provincia: {this.props.provincia}</h5>
+                <h5 className="card-title">Municipio: {this.props.municipio}</h5>
+                <p className="">Lat: {this.props.coordenadas.lat}</p>
+                <p>Long: {this.props.coordenadas.lng}</p>
+                <h6>El tiempo</h6>
+                <Aemet cp={this.props.cp} />
+              </div>
+            </Popup>
+          </Marker>
+        </MapContainer>
+      </React.Fragment>
 
-          <Popup>
-            <div className="card-body">
-              <h5 className="card-title">Provincia: {this.props.provincia}</h5>
-              <h5 className="card-title">Municipio: {this.props.municipio}</h5>
-              <p className="">Lat: {this.props.coordenadas.lat}</p>
-              <p>Long: {this.props.coordenadas.lng}</p>
-              <h6>El tiempo</h6>
-             
-            </div>
-          </Popup>
 
-        </Marker>
-      </MapContainer>
-  </React.Fragment>
-    
-      
 
     )
   }
